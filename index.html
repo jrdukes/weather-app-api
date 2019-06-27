@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width>>, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input
+      type="button"
+      ,
+      onclick="getWeather()"
+      value="Get Charleston Weather"
+    />
+    <p>URL:</p>
+    <div id="divURL" style="border: 1px solid gray;"></div>
+    <div id="divResults" style="border: 1px solid gray;"></div>
+  </body>
+  <script>
+    function getWeather(location) {
+      var url =
+        "https://api.openweathermap.org/data/2.5/weather?APPID=4a861d51d8acec7bd0f9c514cfa56d93&zip=30204,us";
+
+    document.getElementById("divURL").innerHTML = url;
+
+    var prom = new Promise(function (resolve, reject) {
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url);
+      xhr.onload = function() {
+        var responseJSON = JSON.parse(this.response);
+        resolve(responseJSON);
+      };
+
+      xhr.onerror = function() {
+        reject({
+          status: this.status,
+          statusText: this.statusText,
+          response: this.response
+        });
+
+        xhr.send(null);
+      };
+    }
+
+    // prom.then(function(response) {
+    //   console.log(prom);
+    //   console.log(response);
+    // });
+
+    // prom.then(function(response) {
+    //   console.log(prom);
+    //   console.log(response);
+    // });
+
+    // var prom = new Promise(function (resolve, reject) {
+    //   var xhr = new XMLHttpRequest();
+    // xhr.open("GET", url);
+    // xhr.onload = function() {
+    //   console.log("Successfully got data.");
+    //   console.log(this.response);
+    // };
+    // xhr.onerror = function() {
+    //   console.error("Error, did not get data!");
+    //   console.error(this.response);
+    // };
+    // xhr.send(null);
+    // })
+
+    prom.then(function(response) {
+      console.log(prom);
+      console.info(response);
+    });
+
+    prom.catch(function(reject) {
+      console.log(prom);
+      console.info("Error!");
+    });
+  </script>
+</html>
